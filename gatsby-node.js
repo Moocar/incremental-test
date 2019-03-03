@@ -1,11 +1,15 @@
 const pageId = process.env.PAGE_ID || `1`
+const pagePath = process.env.PAGE_PATH || `/my-blog`
 
 
 function sourceNodes(context) {
   const { actions, createNodeId, createContentDigest } = context
   const { createNode } = actions
 
-  const env = process.env.FOO || "nada"
+  let env = process.env.FOO || `nada`
+  if (env === `int`) {
+    env = 5
+  }
   const content = JSON.stringify({ env })
   const node = {
     id: createNodeId("1"),
@@ -28,7 +32,7 @@ function createPages(context) {
   const { actions } = context
   const { createPage } = actions
   const page = {
-    path: "/my-blog",
+    path: pagePath,
     matchPath: `/foo/*`,
     component: require.resolve(`./src/templates/blog`),
     context: {
