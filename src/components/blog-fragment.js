@@ -10,7 +10,7 @@ export default function BlogComponent({ foo }) {
 }
 
 export const blogFragment = graphql`
-  fragment BlogFragment on foo {
+  fragment BlogFragment on Foo {
     env
   }
 `
