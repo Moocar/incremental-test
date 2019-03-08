@@ -10,7 +10,7 @@ function IndexPage(props) {
       <p>Welcome to the incremental test</p>
       <ul>
       { data.allFoo.edges.map(({ node }) => (
-          <li>{node.env}</li>
+          <li>{node.env} - {node.customType}</li>
       ))}
     </ul>
       <p>Now go build something great.</p>
@@ -27,6 +27,7 @@ export const pageQuery = graphql`
       edges {
         node {
           ...BlogFragment
+          customType
         }
       }
     }
