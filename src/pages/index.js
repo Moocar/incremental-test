@@ -1,6 +1,8 @@
 import React from "react"
 import { Link, graphql } from "gatsby"
 import BlogComponent from "../components/blog-fragment"
+import { NonLink }  from "../components/non-link"
+import ReachRouter from "@reach/router"
 
 function IndexPage(props) {
   const { data } = props
@@ -15,6 +17,8 @@ function IndexPage(props) {
     </ul>
       <p>Now go build something great.</p>
       <Link to="/my-blog/">Go to the blog</Link>
+      <NonLink to="/page3">Not a link</NonLink>
+      <p>After</p>
       </div>
   )
 }

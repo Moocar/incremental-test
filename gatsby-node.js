@@ -4,23 +4,9 @@ const pageId = process.env.PAGE_ID || `1`
 const pagePath = process.env.PAGE_PATH || `/my-blog`
 const matchPath = process.env.MATCH_PATH || `/foo/*`
 
-function setFieldsOnGraphQLNodeType(
-  { type, getNode }
-) {
-  if (type.name !== `Foo`) {
-    return {}
-  }
-  return {
-    customType: {
-      type: GraphQLString,
-      resolve: async (node, args) => "custom result",
-    }
-  }
-}
-
 function sourceNodes(context) {
   const { actions, createNodeId, createContentDigest } = context
-  const { createNode } = actions
+  const { createNode, createNodeField } = actions
 
   let env = process.env.FOO || `nada`
   if (env === `int`) {
@@ -69,6 +55,29 @@ function sourceNodes(context) {
   })
 }
 
+function onCreateNode(context) {
+  const { actions, node } = context
+  const { createNodeField } = actions
+  if (node.internal.type === `StaticFoo`) {
+    console.log(`creating static foo`)
+    createNodeField({ node, name: `slug`, value: `slugval` })
+  }
+}
+
+function setFieldsOnGraphQLNodeType(
+  { type, getNode }
+) {
+  if (type.name !== `Foo`) {
+    return {}
+  }
+  return {
+    customType: {
+      type: GraphQLString,
+      resolve: async (node, args) => "custom result",
+    }
+  }
+}
+
 function createPages(context) {
   const { actions } = context
   const { createPage, createRedirect } = actions
@@ -80,6 +89,7 @@ function createPages(context) {
       id: pageId,
     },
   }
+  console.log(`creating page`)
   createPage(page)
   createRedirect({
     fromPath: `/redirect-me/`,
@@ -88,8 +98,20 @@ function createPages(context) {
   })
 }
 
+function onCreatePage(context) {
+  console.log(`site: onCreatePage`)
+  const { page, actions } = context
+  const { createPage } = actions
+  if (page.path === `/page2/`) {
+    page.context.newField = `newValue`
+    createPage(page)
+  }
+}
+
 module.exports = {
   sourceNodes,
-  createPages,
+  onCreateNode,
   setFieldsOnGraphQLNodeType,
+  createPages,
+  onCreatePage,
 }
