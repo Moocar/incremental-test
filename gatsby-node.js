@@ -2,8 +2,8 @@ const { GraphQLString } = require(`gatsby/graphql`)
 
 const _ = require(`lodash`)
 const pageId = process.env.PAGE_ID || `1`
-const pagePath = process.env.PAGE_PATH || `/my-blog`
-const matchPath = process.env.MATCH_PATH || `/foo1/*`
+const pagePath = process.env.PAGE_PATH || `/my-blog/foo`
+const matchPath = process.env.MATCH_PATH || `/my-blog/*`
 
 function sourceNodes(context) {
   const { actions, createNodeId, createContentDigest } = context
