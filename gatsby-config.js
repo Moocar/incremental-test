@@ -4,7 +4,7 @@ module.exports = {
   },
   plugins: [
     // 'gatsby-plugin-react-helmet',
-    // 'gatsby-plugin-offline',
+//    'gatsby-plugin-offline',
     // {
     //   resolve: `gatsby-source-filesystem`,
     //   options: {
@@ -19,7 +19,7 @@ module.exports = {
         path: `${__dirname}/docs`,
         omitFields: [`accessTime`, `atime`, `atimeMs`],
       }
-    },    
+    },
     `gatsby-plugin-sharp`,
     {
       resolve: `gatsby-transformer-remark`,

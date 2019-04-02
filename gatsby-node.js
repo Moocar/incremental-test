@@ -1,8 +1,9 @@
 const { GraphQLString } = require(`gatsby/graphql`)
 
+const _ = require(`lodash`)
 const pageId = process.env.PAGE_ID || `1`
 const pagePath = process.env.PAGE_PATH || `/my-blog`
-const matchPath = process.env.MATCH_PATH || `/foo/*`
+const matchPath = process.env.MATCH_PATH || `/foo1/*`
 
 function sourceNodes(context) {
   const { actions, createNodeId, createContentDigest } = context
@@ -24,21 +25,25 @@ function sourceNodes(context) {
     },
   ]
   fooNodes.forEach(({ id, env }) => {
-    const content = JSON.stringify({ env })
-    createNode({
-      id,
-      parent: null,
-      children: [],
-      internal: {
-        type: "Foo",
-        content,
-        contentDigest: createContentDigest(content),
-        description: "my description",
-      },
+    const nodeData = {
       innerId: pageId,
       env,
       data1: "data1Val",
-    })
+    }
+    const internal = {
+      type: "Foo",
+      content: JSON.stringify(nodeData),
+      contentDigest: createContentDigest(nodeData),
+      description: "my description",
+    }
+    const node = {
+      id,
+      parent: null,
+      children: [],
+      internal,
+      ...nodeData,
+    }
+    createNode(node)
   })
   const staticFoo = process.env.STATIC_FOO || `static-foo`
   createNode({
@@ -59,7 +64,6 @@ function onCreateNode(context) {
   const { actions, node } = context
   const { createNodeField } = actions
   if (node.internal.type === `StaticFoo`) {
-    console.log(`creating static foo`)
     createNodeField({ node, name: `slug`, value: `slugval` })
   }
 }
@@ -89,7 +93,6 @@ function createPages(context) {
       id: pageId,
     },
   }
-  console.log(`creating page`)
   createPage(page)
   createRedirect({
     fromPath: `/redirect-me/`,
@@ -99,7 +102,6 @@ function createPages(context) {
 }
 
 function onCreatePage(context) {
-  console.log(`site: onCreatePage`)
   const { page, actions } = context
   const { createPage } = actions
   if (page.path === `/page2/`) {
