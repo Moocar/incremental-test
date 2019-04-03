@@ -17,7 +17,8 @@ function IndexPage(props) {
     </ul>
       <p>Now go build something great.</p>
       <ul>
-      <li><Link to="/my-blog/foo">Go to the blog</Link></li>
+      <li><Link to="/my-blog/foo/">Go to the blog</Link></li>
+      <li><Link to="/md-page/">Go to the markdown page</Link></li>
       <li><Link to="/page2/">Go to page2</Link></li>
       <li><NonLink to="/page3">Not a link</NonLink></li>
       <li><Link to="/my-blog/bar">A match path</Link></li>

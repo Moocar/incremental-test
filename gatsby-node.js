@@ -85,20 +85,32 @@ function setFieldsOnGraphQLNodeType(
 function createPages(context) {
   const { actions } = context
   const { createPage, createRedirect } = actions
-  const page = {
-    path: pagePath,
-    matchPath: matchPath,
-    component: require.resolve(`./src/templates/blog`),
-    context: {
-      id: pageId,
-    },
+  {
+    const page = {
+      path: pagePath,
+      matchPath: matchPath,
+      component: require.resolve(`./src/templates/blog`),
+      context: {
+        id: pageId,
+      },
+    }
+    createPage(page)
+    createRedirect({
+      fromPath: `/redirect-me/`,
+      toPath: pagePath,
+      isPermanent: true,
+    })
   }
-  createPage(page)
-  createRedirect({
-    fromPath: `/redirect-me/`,
-    toPath: pagePath,
-    isPermanent: true,
-  })
+  {
+    const page = {
+      path: `/md-page/`,
+      component: require.resolve(`./src/templates/markdown-blog`),
+      context: {
+        id: `md-page`,
+      },
+    }
+    createPage(page)
+  }
 }
 
 function onCreatePage(context) {
