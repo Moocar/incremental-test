@@ -24,7 +24,7 @@
     "gatsby-transformer-sharp": "^2.1.15",
     "graphql-compose": "^6.0.3",
     "pnp-webpack-plugin": "^1.4.1",
-    "prismjs": "^1.15.0",
+    "prismjs": "^1.21.0",
     "react": "^16.8.3",
     "react-dom": "^16.8.3",
     "react-helmet": "^5.2.0",
